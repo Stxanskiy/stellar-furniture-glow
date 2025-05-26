@@ -130,19 +130,12 @@ const Hero = () => {
               
               <div className="absolute -bottom-6 -right-6 bg-gradient-to-r from-orange-500 to-orange-600 text-white p-6 rounded-2xl shadow-xl animate-fade-in" style={{ animationDelay: '1s' }}>
                 <div className="text-center">
-                  <div className="text-2xl font-bold">-30%</div>
-                  <div className="text-sm opacity-90">Черная пятница</div>
+                  <div className="text-2xl font-bold">-35%</div>
+                  <div className="text-sm opacity-90">Сикдка</div>
                 </div>
               </div>
 
-              <div className="absolute top-1/2 -left-8 bg-white p-4 rounded-xl shadow-lg animate-fade-in" style={{ animationDelay: '1.2s' }}>
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                    <Shield className="w-4 h-4 text-blue-600" />
-                  </div>
-                  <div className="text-xs font-medium text-slate-700">Гарантия<br/>10 лет</div>
-                </div>
-              </div>
+
             </div>
           </div>
         </div>

@@ -7,7 +7,7 @@ const FeaturedCategories = () => {
     {
       name: 'Мебель для гостиной',
       icon: Sofa,
-      image: 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?auto=format&fit=crop&w=600&q=80',
+      image: 'https://i.pinimg.com/736x/93/4f/e9/934fe9965f6955098cda51afe015e9a0.jpg',
       itemCount: '2,400+ товаров',
       color: 'from-blue-500 to-blue-600',
       hoverColor: 'group-hover:from-blue-600 group-hover:to-blue-700'
@@ -15,7 +15,7 @@ const FeaturedCategories = () => {
     {
       name: 'Освещение',
       icon: Lamp,
-      image: 'https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&w=600&q=80',
+      image: 'https://i.pinimg.com/736x/49/df/68/49df68a5a20ea281bfa21342d19d017d.jpg',
       itemCount: '1,800+ товаров',
       color: 'from-amber-500 to-orange-500',
       hoverColor: 'group-hover:from-amber-600 group-hover:to-orange-600'
@@ -23,7 +23,7 @@ const FeaturedCategories = () => {
     {
       name: 'Спальни',
       icon: Bed,
-      image: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&w=600&q=80',
+      image: 'https://i.pinimg.com/736x/b6/f4/bf/b6f4bf15c6cd1ee61f12baa7a76cd28f.jpg',
       itemCount: '1,200+ товаров',
       color: 'from-purple-500 to-pink-500',
       hoverColor: 'group-hover:from-purple-600 group-hover:to-pink-600'
@@ -31,7 +31,7 @@ const FeaturedCategories = () => {
     {
       name: 'Кухни',
       icon: ChefHat,
-      image: 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?auto=format&fit=crop&w=600&q=80',
+      image: 'https://i.pinimg.com/736x/04/f7/a2/04f7a24d8c1ffdbd280cd871a330386d.jpg',
       itemCount: '900+ товаров',
       color: 'from-green-500 to-emerald-500',
       hoverColor: 'group-hover:from-green-600 group-hover:to-emerald-600'
@@ -39,7 +39,7 @@ const FeaturedCategories = () => {
     {
       name: 'Ванные комнаты',
       icon: Bath,
-      image: 'https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&w=600&q=80',
+      image: 'https://i.pinimg.com/736x/3b/9a/73/3b9a73750c01dd16a17db5b65c1ed230.jpg',
       itemCount: '600+ товаров',
       color: 'from-cyan-500 to-blue-500',
       hoverColor: 'group-hover:from-cyan-600 group-hover:to-blue-600'

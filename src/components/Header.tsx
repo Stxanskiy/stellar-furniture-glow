@@ -21,7 +21,7 @@ const Header = () => {
         {/* Top Bar */}
         <div className="flex items-center justify-between py-2 text-sm border-b border-slate-100">
           <div className="hidden md:flex items-center space-x-6 text-slate-600">
-            <span>📞 +7 (800) 123-45-67</span>
+            <span>📞 +7 (999) 969-07-68</span>
             <span>🚚 Бесплатная доставка от 15,000 ₽</span>
           </div>
           <div className="flex items-center space-x-4 text-slate-600">
