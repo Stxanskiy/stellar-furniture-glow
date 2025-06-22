@@ -1,8 +1,31 @@
-
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Sofa, Lamp, Bed, LayoutGrid, ChefHat, Bath } from 'lucide-react';
 
 const FeaturedCategories = () => {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut" as const
+      }
+    }
+  };
+
   const categories = [
     {
       name: 'Мебель для гостиной',
@@ -57,7 +80,13 @@ const FeaturedCategories = () => {
   return (
     <section className="py-20 bg-gradient-to-b from-white to-slate-50" id="categories">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" as const }}
+        >
           <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
             Популярные категории
           </h2>
@@ -65,14 +94,21 @@ const FeaturedCategories = () => {
             Откройте для себя наши тщательно отобранные коллекции мебели и декора, 
             созданные для воплощения ваших самых смелых дизайнерских идей
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
           {categories.map((category, index) => (
-            <div
+            <motion.div
               key={category.name}
-              className="group relative overflow-hidden rounded-3xl bg-slate-100 aspect-[4/5] cursor-pointer transform transition-all duration-700 hover:scale-105 hover:shadow-2xl animate-fade-in border border-slate-200"
-              style={{ animationDelay: `${index * 0.15}s` }}
+              className="group relative overflow-hidden rounded-3xl bg-slate-100 aspect-[4/5] cursor-pointer transform transition-all duration-700 hover:scale-105 hover:shadow-2xl border border-slate-200"
+              variants={itemVariants}
+              whileHover={{ y: -5 }}
             >
               {/* Background Image */}
               <img
@@ -110,16 +146,22 @@ const FeaturedCategories = () => {
               {/* Decorative Element */}
               <div className="absolute top-4 right-4 w-2 h-2 bg-white rounded-full opacity-60 group-hover:opacity-100 transition-opacity"></div>
               <div className="absolute top-8 right-4 w-1 h-1 bg-white rounded-full opacity-40 group-hover:opacity-80 transition-opacity"></div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Bottom CTA */}
-        <div className="text-center mt-16">
+        <motion.div 
+          className="text-center mt-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" as const, delay: 0.3 }}
+        >
           <button className="bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-700 hover:to-orange-600 text-white px-10 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
             Посмотреть весь каталог
           </button>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

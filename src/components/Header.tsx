@@ -1,5 +1,5 @@
-
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Search, ShoppingCart, Menu, X, Home, Lamp, Sofa, Bed, Heart, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -14,6 +14,26 @@ const Header = () => {
     { name: 'Освещение', icon: Lamp, href: '#lighting' },
     { name: 'Спальни', icon: Bed, href: '#bedroom' },
   ];
+
+  const menuVariants = {
+    hidden: { opacity: 0, height: 0 },
+    visible: { 
+      opacity: 1, 
+      height: "auto",
+      transition: {
+        duration: 0.3,
+        ease: "easeOut" as const
+      }
+    },
+    exit: { 
+      opacity: 0, 
+      height: 0,
+      transition: {
+        duration: 0.2,
+        ease: "easeIn" as const
+      }
+    }
+  };
 
   return (
     <header className="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-slate-200">
@@ -111,34 +131,42 @@ const Header = () => {
         </div>
 
         {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden border-t border-slate-200 py-4 animate-fade-in bg-white/95 backdrop-blur-md">
-            <div className="flex flex-col space-y-4">
-              {/* Mobile Search */}
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
-                <Input
-                  type="text"
-                  placeholder="Поиск..."
-                  className="pl-12 pr-4 py-3 w-full rounded-xl bg-slate-50"
-                />
-              </div>
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div 
+              className="md:hidden border-t border-slate-200 py-4 bg-white/95 backdrop-blur-md"
+              variants={menuVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            >
+              <div className="flex flex-col space-y-4">
+                {/* Mobile Search */}
+                <div className="relative">
+                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
+                  <Input
+                    type="text"
+                    placeholder="Поиск..."
+                    className="pl-12 pr-4 py-3 w-full rounded-xl bg-slate-50"
+                  />
+                </div>
 
-              {/* Mobile Menu Items */}
-              {categories.map((category) => (
-                <a
-                  key={category.name}
-                  href={category.href}
-                  className="flex items-center space-x-3 text-slate-700 hover:text-orange-600 transition-colors py-3 px-4 rounded-xl hover:bg-orange-50"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <category.icon className="w-5 h-5" />
-                  <span className="font-medium">{category.name}</span>
-                </a>
-              ))}
-            </div>
-          </div>
-        )}
+                {/* Mobile Menu Items */}
+                {categories.map((category) => (
+                  <a
+                    key={category.name}
+                    href={category.href}
+                    className="flex items-center space-x-3 text-slate-700 hover:text-orange-600 transition-colors py-3 px-4 rounded-xl hover:bg-orange-50"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <category.icon className="w-5 h-5" />
+                    <span className="font-medium">{category.name}</span>
+                  </a>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </header>
   );

@@ -1,86 +1,13 @@
-
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { Heart, ShoppingCart, Star, Eye } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { products } from '@/data/products';
 
 const ProductGrid = () => {
   const [favorites, setFavorites] = useState<number[]>([]);
-
-  const products = [
-    {
-      id: 1,
-      name: 'Диван "Комфорт Люкс"',
-      price: 89990,
-      originalPrice: 119990,
-      image: 'https://i.pinimg.com/736x/ae/e6/35/aee63548759458749cdb95f7317824e1.jpg',
-      rating: 4.8,
-      reviews: 124,
-      category: 'Мебель',
-      isNew: false,
-      isHot: true
-    },
-    {
-      id: 2,
-      name: 'Люстра "Кристалл"',
-      price: 45990,
-      originalPrice: null,
-      image: 'https://i.pinimg.com/736x/39/68/08/396808ff9555f65c8c06cb96a7824659.jpg',
-      rating: 4.9,
-      reviews: 89,
-      category: 'Освещение',
-      isNew: true,
-      isHot: false
-    },
-    {
-      id: 3,
-      name: 'Спальная гарнитура"Мечта"',
-      price: 159990,
-      originalPrice: 199990,
-      image: 'https://i.pinimg.com/736x/06/9a/28/069a28fa86e643f61d5229bdb50aa0a1.jpg',
-      rating: 4.7,
-      reviews: 67,
-      category: 'Спальня',
-      isNew: false,
-      isHot: true
-    },
-    {
-      id: 4,
-      name: 'Кресло "Релакс"',
-      price: 32990,
-      originalPrice: null,
-      image: 'https://i.pinimg.com/736x/6b/f8/83/6bf883f7b6c90bad7bb0c7e0d1b7f8c6.jpg',
-      rating: 4.6,
-      reviews: 156,
-      category: 'Мебель',
-      isNew: true,
-      isHot: false
-    },
-    {
-      id: 5,
-      name: 'Обеденный стол "Классик"',
-      price: 78990,
-      originalPrice: 94990,
-      image: 'https://i.pinimg.com/736x/d1/65/a2/d165a29cc64e13b224d45ba44d8084f5.jpg',
-      rating: 4.8,
-      reviews: 93,
-      category: 'Мебель',
-      isNew: false,
-      isHot: false
-    },
-    {
-      id: 6,
-      name: 'Торшер "Стиль"',
-      price: 18990,
-      originalPrice: 24990,
-      image: 'https://i.pinimg.com/736x/ab/56/b7/ab56b75ececd221f3a272d96b1efcd3c.jpg',
-      rating: 4.5,
-      reviews: 78,
-      category: 'Освещение',
-      isNew: false,
-      isHot: true
-    }
-  ];
 
   const toggleFavorite = (productId: number) => {
     setFavorites(prev => 
@@ -94,32 +21,69 @@ const ProductGrid = () => {
     return new Intl.NumberFormat('ru-RU').format(price) + ' ₽';
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut" as const
+      }
+    }
+  };
+
   return (
     <section className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
+        <motion.div 
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" as const }}
+        >
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
             Рекомендуемые товары
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Специально отобранные для вас предложения с лучшими скидками
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {products.map((product, index) => (
-            <div
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          {products.map((product) => (
+            <motion.div
               key={product.id}
-              className="group bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-orange-200 animate-fade-in"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              variants={itemVariants}
+              whileHover={{ y: -5 }}
+              className="group bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-orange-200"
             >
               {/* Product Image */}
               <div className="relative aspect-square overflow-hidden">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
+                <Link to={`/product/${product.id}`}>
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 cursor-pointer"
+                  />
+                </Link>
                 
                 {/* Badges */}
                 <div className="absolute top-4 left-4 flex flex-col gap-2">
@@ -156,13 +120,15 @@ const ProductGrid = () => {
                       } transition-colors`} 
                     />
                   </Button>
-                  <Button
-                    size="sm"
-                    variant="secondary"
-                    className="w-10 h-10 rounded-full p-0 bg-white/90 hover:bg-white shadow-lg"
-                  >
-                    <Eye className="w-4 h-4 text-gray-600" />
-                  </Button>
+                  <Link to={`/product/${product.id}`}>
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      className="w-10 h-10 rounded-full p-0 bg-white/90 hover:bg-white shadow-lg"
+                    >
+                      <Eye className="w-4 h-4 text-gray-600" />
+                    </Button>
+                  </Link>
                 </div>
 
                 {/* Quick Add to Cart */}
@@ -180,9 +146,11 @@ const ProductGrid = () => {
                   <span className="text-sm text-orange-600 font-medium">{product.category}</span>
                 </div>
                 
-                <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-orange-600 transition-colors">
-                  {product.name}
-                </h3>
+                <Link to={`/product/${product.id}`}>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-orange-600 transition-colors cursor-pointer">
+                    {product.name}
+                  </h3>
+                </Link>
 
                 {/* Rating */}
                 <div className="flex items-center gap-2 mb-4">
@@ -215,12 +183,18 @@ const ProductGrid = () => {
                   )}
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Load More Button */}
-        <div className="text-center mt-12">
+        <motion.div 
+          className="text-center mt-12"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" as const, delay: 0.3 }}
+        >
           <Button 
             size="lg" 
             variant="outline"
@@ -228,7 +202,7 @@ const ProductGrid = () => {
           >
             Показать больше товаров
           </Button>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
