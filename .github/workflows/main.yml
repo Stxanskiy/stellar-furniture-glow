@@ -1,0 +1,81 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    - name: Setup Node.js for Frontend
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        cache-dependency-path: './package-lock.json'
+
+    - name: Install Frontend Dependencies
+      working-directory: ./
+      run: npm ci
+#
+#    - name: Lint Frontend
+#      working-directory: ./
+#      run: npm run lint
+
+    - name: Build Frontend
+      working-directory: ./
+      run: npm run build
+
+  deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    - name: Install SSH key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
+        if_key_exists: replace
+
+    - name: Deploy to server
+      run: |
+        ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "set -e
+
+        # Setup NVM and Node.js
+        export NVM_DIR=\"\$HOME/.nvm\"
+        [ -s \"\$NVM_DIR/nvm.sh\" ] && \. \"\$NVM_DIR/nvm.sh\"
+        nvm use 22.16.0
+
+        # Always clone fresh repository
+        cd /home
+        if [ -d \"app\" ]; then
+          # Backup existing app directory
+          mv app app_backup_\$(date +%Y%m%d_%H%M%S)
+        fi
+        git clone https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git app
+
+        cd /home/app
+
+        
+
+        # Frontend deployment
+        cd frontend
+        . \"\$NVM_DIR/nvm.sh\"
+        nvm use 22.16.0
+        npm ci
+        npm run build
+        "
